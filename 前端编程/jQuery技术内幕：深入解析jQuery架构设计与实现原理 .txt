@@ -1,0 +1,392 @@
+第一部分　总体架构
+第1章　总体架构
+	1.1　设计理念
+	1.2　总体架构
+	1.3　自调用匿名函数
+	1.4　总结
+第二部分　构造jQuery对象
+第2章　构造jQuery对象
+	2.1　构造函数jQuery
+		2.1.1　jQuery（ selector [， context] ）
+		2.1.2　jQuery（ html [， ownerDocument] ）、jQuery（ html， props ）
+		2.1.3　jQuery（ element ）、jQuery（ elementArray ）
+		2.1.4　jQuery（ object ）
+		2.1.5　jQuery（ callback ）
+		2.1.6　jQuery（ jQuery object ）
+		2.1.7　jQuery
+	2.2　总体结构
+	2.3　jQuery.fn.init（ selector， context， rootjQuery ）
+		2.3.1　12个分支
+		2.3.2　源码分析
+		2.3.3　小结
+	2.4　jQuery.buildFragment（ args， nodes， scripts ）
+		2.4.1　实现原理
+		2.4.2　源码分析
+		2.4.3　小结
+	2.5　jQuery.clean（ elems， context， fragment， scripts ）
+		2.5.1　实现原理
+		2.5.2　源码分析
+		2.5.3　小结
+	2.6　jQuery.extend、jQuery.fn.extend
+		2.6.1　如何使用
+		2.6.2　源码分析
+	2.7　原型属性和方法
+		2.7.1　.selector、.jquery、.length、.size
+		2.7.2　.toArray、.get（ [index] ）
+		2.7.3　.each（ function（index， Element） ）、jQuery.each（ collection， callback （indexInArray， valueOfElement） ）
+		2.7.4　.map（ callback（index， domElement） ）、jQuery.map（ arrayOrObject， callback（value， indexOrKey） ）
+		2.7.5　.pushStack（ elements， name， arguments ）
+		2.7.6　.end
+		2.7.7　.eq（ index ）、.first、.last、.slice（ start [， end] ）
+		2.7.8　.push（ value， ... ）、.sort（ [orderfunc] ）、.splice（ start，deleteCount， value， ... ）
+		2.7.9　小结
+	2.8　静态属性和方法
+		2.8.1　jQuery.noConflict（ [removeAll] ）
+		2.8.2　类型检测：jQuery.isFunction（ obj ）、jQuery.isArray（ obj ）、jQuery.isWindow（ obj ）、jQuery.isNumeric（ value ）、jQuery.type（ obj ）、jQuery.isPlainObject（ object ）、jQuery.isEmptyObject（ object ）
+		2.8.3　解析JSON和XML：jQuery.parseJSON（ data ）、jQuery.parseXML（ data ）
+		2.8.4　jQuery.globalEval（ code ）
+		2.8.5　jQuery.camelCase（ string ）
+		2.8.6　jQuery.nodeName（ elem， name ）
+		2.8.7　jQuery.trim（ str ）
+		2.8.8　数组操作方法：jQuery.makeArray（ obj ）、jQuery.inArray（ value， array [， fromIndex] ）、jQuery.merge（ first， second ）、jQuery.grep（ array， function（elementOfArray， indexInArray） [， invert] ）
+		2.8.9　jQuery.guid、jQuery.proxy（ function， context ）
+		2.8.10　jQuery.access（ elems， key， value， exec， fn（ elem， key， value ）， pass ）
+		2.8.11　jQuery.error（ message ）、jQuery.noop、jQuery.now
+		2.8.12　浏览器嗅探：jQuery.uaMatch（ ua ）、jQuery.browser
+		2.8.13　小结
+	2.9　总结
+第三部分　底层支持模块
+第3章　选择器Sizzle
+	3.1　总体结构
+	3.2　选择器表达式
+	3.3　设计思路
+	3.4　Sizzle（ selector， context， results， seed ）
+	3.5　正则chunker
+	3.6　Sizzle.find（ expr， context， isXML ）
+	3.7　Sizzle.filter（ expr， set， inplace， not ）
+	3.8　Sizzle.selectors.relative
+		3.8.1　“+”
+		3.8.2　“>”
+		3.8.3　““
+		3.8.4　“~”
+		3.8.5　dirCheck（ dir， cur， doneName， checkSet， nodeCheck， isXML ）
+		3.8.6　dirNodeCheck（ dir， cur， doneName， checkSet， nodeCheck， isXML ）
+	3.9　Sizzle.selectors
+		3.9.1　Sizzle.selectors.order
+		3.9.2　Sizzle.selectors.match/leftMatch
+		3.9.3　Sizzle.selectors.find
+		3.9.4　Sizzle.selectors.preFilter
+		3.9.5　Sizzle.selectors.filters
+		3.9.6　Sizzle.selectors.setFilters
+		3.9.7　Sizzle.selectors.filter
+	3.10　工具方法
+		3.10.1　Sizzle.uniqueSort（ results ）
+		3.10.2　sortOrder（ a， b ）
+		3.10.3　Sizzle.contains（ a， b ）
+		3.10.4　Sizzle.error（ msg ）
+		3.10.5　Sizzle.getText（ elem ）
+	3.11　便捷方法
+		3.11.1　Sizzle.matches（ expr， set ）
+		3.11.2　Sizzle.matchesSelector（ node， expr ）
+	3.12　jQuery扩展
+		3.12.1　暴露Sizzle给jQuery
+		3.12.2　.find（ selector ）
+		3.12.3　.has（ target ）
+		3.12.4　.not（ selector ）、.filter（ selector ）
+		3.12.5　.is（ selector ）
+		3.12.6　.closest（ selectors， context ）
+		3.12.7　.index（ elem ）
+		3.12.8　.add（ selector， context ）
+		3.12.9　jQuery.filter（ expr， elems， not ）
+		3.12.10　：animated
+		3.12.11　hidden、：visible
+	3.13　总结
+第4章　异步队列Deferred Object
+	4.1　jQuery.Callbacks（ flags ）
+		4.1.1　实现原理和总体结构
+		4.1.2　源码分析
+		4.1.3　小结
+	4.2　jQuery.Deferred（ func ）
+		4.2.1　实现原理和总体结构
+		4.2.2　源码分析
+		4.2.3　小结
+	4.3　jQuery.when（ deferreds ）
+		4.3.1　实现原理
+		4.3.2　源码分析
+	4.4　异步队列在jQuery中的应用
+	4.5　总结
+第5章　数据缓存Data
+	5.1　实现原理
+		5.1.1　为DOM元素附加数据
+		5.1.2　为JavaScript对象附加数据
+	5.2　总体结构
+	5.3　jQuery.acceptData（ elem ）
+	5.4　jQuery.data（ elem， name， data， pvt ）、jQuery._data（ elem， name， data， pvt ）
+		5.4.1　如何使用
+		5.4.2　源码分析
+		5.4.3　jQuery._data（ elem， name， data ）
+		5.4.4　小结
+	5.5　.data（ key，value ）
+		5.5.1　如何使用
+		5.5.2　源码分析
+		5.5.3　小结
+	5.6　jQuery.removeData（ elem，name，pvt ）、.removeData（ key ）
+		5.6.1　如何使用
+		5.6.2　源码分析
+		5.6.3　小结
+	5.7　.removeData（ key ）
+	5.8　jQuery.cleanData（ elems ）
+		5.8.1　应用场景
+		5.8.2　源码分析
+		5.8.3　小结
+	5.9　jQuery.hasData（ elem ）
+	5.10　总结
+第6章　队列Queue
+	6.1　如何使用
+		6.1.1　Ajax队列
+		6.1.2　动画队列+ Ajax队列
+		6.1.3　基于JavaScript对象
+	6.2　实现原理
+	6.3　总体结构
+	6.4　jQuery.queue（ elem，type，data ）
+	6.5　jQuery.dequeue（ elem，type ）
+	6.6　.queue（ type，data ）
+	6.7　.dequeue（ type ）
+	6.8　.delay（ time，type ）
+	6.9　.clearQueue（ type ）
+	6.10　jQuery._mark（ elem，type ）、jQuery._unmark（ force，elem，type ）
+	6.11　.promise（ type，object ）
+		6.11.1　如何使用
+		6.11.2　实现原理
+		6.11.3　源码分析
+		6.11.4　handleQueueMarkDefer（ elem，type，src ）
+	6.12　总结
+第7章　浏览器功能测试Support
+	7.1　总体结构
+	7.2　DOM测试（15项）
+		7.2.1　leadingWhitespace
+		7.2.2　tbody
+		7.2.3　htmlSerialize
+		7.2.4　hrefNormalized
+		7.2.5　checkOn
+		7.2.6　noCloneChecked
+		7.2.7　optSelected
+		7.2.8　optDisabled
+		7.2.9　getSetAttribute
+		7.2.10　deleteExpando
+		7.2.11　enctype
+		7.2.12　html5Clone
+		7.2.13　radioValue
+		7.2.14　checkClone
+		7.2.15　appendChecked
+	7.3　样式测试（3项）
+		7.3.1　style
+		7.3.2　opacity
+		7.3.3　cssFloat
+	7.4　盒模型测试（10项）
+		7.4.1　reliableMarginRight
+		7.4.2　reliableHiddenOffsets
+		7.4.3　boxModel
+		7.4.4　inlineBlockNeedsLayout
+		7.4.5　shrinkWrapBlocks
+		7.4.6　doesNotAddBorder、doesAddBorderForTableAndCells
+		7.4.7　fixedPosition
+		7.4.8　subtractsBorderForOverflowNotVisible
+		7.4.9　doesNotIncludeMarginInBodyOffset
+	7.5　事件测试（4项）
+		7.5.1　noCloneEvent
+		7.5.2　submitBubbles、changeBubbles、focusinBubbles
+	7.6　Ajax测试（2项）
+		7.6.1　ajax
+		7.6.2　cors
+	7.7　总结
+第四部分　功能模块
+第8章　属性操作Attributes
+	8.1　总体结构
+	8.2　jQuery.attr（ elem， name， value， pass ）
+		8.2.1　源码分析
+		8.2.2　boolHook
+		8.2.3　nodeHook
+		8.2.4　jQuery.attrHooks
+		8.2.5　小结
+	8.3　.attr（ name， value ）
+	8.4　jQuery.removeAttr（ elem， value ）
+		8.4.1　源码分析
+		8.4.2　小结
+	8.5　.removeAttr（ name ）
+	8.6　jQuery.prop（ elem， name， value ）
+		8.6.1　源码分析
+		8.6.2　jQuery.propHooks
+		8.6.3　小结
+	8.7　.prop（ name， value ）
+	8.8　.removeProp（ name ）
+	8.9　.addClass（ className ）
+		8.9.1　源码分析
+		8.9.2　小结
+	8.10　.removeClass（ [className] ）
+		8.10.1　源码分析
+		8.10.2　小结
+	8.11　.toggleClass（ [className][， switch] ）
+		8.11.1　源码分析
+		8.11.2　小结
+	8.12　.hasClass（ selector ）
+		8.12.1　源码分析
+		8.12.2　小结
+	8.13　.val（ [value] ）
+		8.13.1　源码分析
+		8.13.2　jQuery.valHooks
+		8.13.3　小结
+	8.14　总结
+第9章　事件系统Events
+	9.1　总体结构
+	9.2　实现原理
+	9.3　jQuery 事件对象
+		9.3.1　构造函数jQuery.Event（ src， props ）
+		9.3.2　原型对象jQuery.Event.prototype
+		9.3.3　事件属性修正方法jQuery.event.fix（ event ）
+	9.4　绑定事件
+		9.4.1　.on（ events [， selector] [， data] ， handler（ eventObject ） ）
+		9.4.2　jQuery.event.add（ elem， types， handler， data， selector ）
+	9.5　移除事件
+		9.5.1　.off（ events [， selector] [， handler（ eventObject ） ] ）
+		9.5.2　jQuery.event.remove（ elem， types， handler， selector， mappedTypes ）
+	9.6　事件响应
+		9.6.1　主监听函数
+		9.6.2　jQuery.event.dispatch（ event ）
+	9.7　手动触发事件
+		9.7.1　.trigger（ eventType [， extraParameters] ）、.triggerHandler（ eventType [， extraParameters] ）
+		9.7.2　jQuery.event.trigger（ event， data， elem， onlyHandlers ）
+	9.8　事件修正和模拟jQuery.event.special
+		9.8.1　ready
+		9.8.2　load
+		9.8.3　focus、blur
+		9.8.4　beforeunload
+		9.8.5　mouseenter、mouseleave
+		9.8.6　submit
+		9.8.7　change
+		9.8.8　focusin、focusout
+		9.8.9　jQuery.event.simulate（ type， elem， event， bubble ）
+	9.9　事件便捷方法
+	9.10　组合方法
+		9.10.1　.toggle（ handler（ eventObject ）， handler（ eventObject ） [， handler（ eventObject ）] ）
+		9.10.2　.hover（ handlerIn（ eventObject ） [， handlerOut（ eventObject ）] ）
+	9.11　ready 事件
+		9.11.1　总体结构
+		9.11.2　.ready（ handler ）
+		9.11.3　jQuery.bindReady
+		9.11.4　jQuery.holdReady（ hold ）
+		9.11.5　jQuery.ready（ wait ）
+	9.12　总结
+第10章　DOM遍历Traversing
+	10.1　总体结构
+	10.2　遍历函数
+	10.3　工具函数
+		10.3.1　jQuery.dir（ elem， dir， until ）
+		10.3.2　jQuery.nth（ cur， result， dir， elem ）
+		10.3.3　jQuery.sibling（ n， elem ）
+	10.4　模板函数
+	10.5　总结
+第11章　DOM操作Manipulation
+	11.1　总体结构
+	11.2　插入元素
+		11.2.1　核心方法.domManip（ args， table， callback ）
+		11.2.2　.append（ content [， content] ）
+		11.2.3　.prepend（ content [， content] ）
+		11.2.4　.before（ content [， content] ）
+		11.2.5　.after（ content [， content] ）
+		11.2.6　.appendTo（ target ）、.prependTo（ target ）、.insertBefore（ target ）、.insertAfter（ target ）
+		11.2.7　.html（ [value] ）
+		11.2.8　.text（ [text] ）
+	11.3　删除元素
+		11.3.1　.remove（ selector， keepData ）
+		11.3.2　.empty
+		11.3.3　.detach（ selector ）
+	11.4　复制元素
+		11.4.1　.clone（ dataAndEvents， deepDataAndEvents ）
+		11.4.2　jQuery.clone（ elem， dataAndEvents， deepDataAndEvents ）
+		11.4.3　cloneFixAttributes（ src， dest ）
+	11.5　替换元素
+		11.5.1　.replaceWith（ value ）
+		11.5.2　.replaceAll（ target ）
+	11.6　包裹元素
+		11.6.1　.wrapAll（ html ）
+		11.6.2　.wrapInner（ html ）
+		11.6.3　.wrap（ html ）
+		11.6.4　.unwrap
+	11.7　总结
+第12章　样式操作CSS
+	12.1　内联样式、计算样式
+		12.1.1　总体结构
+		12.1.2　.css（ name， value ）
+		12.1.3　jQuery.style（ elem， name， value， extra ）
+		12.1.4　jQuery.css（ elem， name， extra ）
+		12.1.5　curCSS（ elem， name ）、getComputedStyle（ elem， name ）、currentStyle（ elem， name ）
+		12.1.6　jQuery.cssHooks
+	12.2　坐标Offset
+		12.2.1　总体结构
+		12.2.2　.offset（ options ）
+		12.2.3　jQuery.offset.setOffset（ elem， options， i ）
+		12.2.4　jQuery.offset.bodyOffset（ body ）
+		12.2.5　.position
+		12.2.6　.offsetParent
+		12.2.7　.scrollLeft（ val ）、.scrollTop（ val ）
+	12.3　尺寸Dimensions
+		12.3.1　总体结构
+		12.3.2　getWH（ elem， name， extra ）
+		12.3.3　.innerHeight、.innerWidth
+		12.3.4　.outerHeight（ margin ）、.outerWidth（ margin ）
+		12.3.5　.height（ size ）、.width（ size ）
+		12.3.6　小结
+	12.4　总结
+第13章　异步请求Ajax
+	13.1　总体结构
+	13.2　jQuery.ajax（ url， options ）
+	13.3　前置过滤器、请求发送器的初始化和执行
+		13.3.1　初始化
+		13.3.2　执行
+	13.4　前置过滤器
+		13.4.1　json、jsonp
+		13.4.2　script
+		13.4.3　小结
+	13.5　请求发送器
+		13.5.1　script
+		13.5.2　XMLHttpRequest
+		13.5.3　小结
+	13.6　数据转换器
+		13.6.1　初始化
+		13.6.2　执行
+		13.6.3　小结
+	13.7　Ajax事件
+	13.8　便捷方法
+		13.8.1　jQuery.get（ url， data， callback， type ）、jQuery.post（ url， data， callback， type ）
+		13.8.2　jQuery.getJSON（ url， data， callback ）、jQuery.getScript（ url， callback ）
+		13.8.3　.load（ url， params， callback ）
+	13.9　工具方法
+		13.9.1　.serialize
+		13.9.2　jQuery.param（ a， traditional ）
+		13.9.3　.serializeArray
+	13.10　总结
+第14章　动画Effects
+	14.1　总体结构
+	14.2　动画入口
+		14.2.1　.animate（ prop， speed， easing， callback ）
+		14.2.2　jQuery.speed（speed， easing， fn ）
+		14.2.3　doAnimation
+		14.2.4　jQuery.fx（ elem， options， prop ）
+		14.2.5　jQuery.fx.prototype.show
+		14.2.6　jQuery.fx.prototype.hide
+		14.2.7　小结
+	14.3　动画执行
+		14.3.1　jQuery.fx.prototype.custom（ from， to， unit ）
+		14.3.2　jQuery.fx.tick
+		14.3.3　jQuery.fx.prototype.step（ gotoEnd ）
+		14.3.4　jQuery.easing
+		14.3.5　jQuery.fx.prototype.update
+		14.3.6　jQuery.fx.step
+	14.4　停止动画.stop（ type， clearQueue， gotoEnd ）
+	14.5　便捷方法
+		14.5.1　生成动画样式集genFx（ type， num ）
+		14.5.2　显示隐藏.show/hide/toggle
+		14.5.3　渐显渐隐.fadeIn/fadeOut/fadeTo/fadeToggle
+		14.5.4　滑入滑出.slideDown/slidUp/slideToggle
+	14.6　总结
